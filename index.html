@@ -13,10 +13,9 @@
         <!-- 頁首標題 -->
         <div class="text-center">
             <h1 class="text-3xl font-bold text-amber-700">📦 紀家烘焙坊 - 早鳥宅配預購系統</h1>
-            <p class="text-gray-500 mt-2">限量梯次預購，單日總量達 4,260 顆即關閉該日名額。</p>
             <!-- 即時庫存進度條 -->
             <div id="stockNotice" class="mt-4 inline-block bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full text-xs font-semibold shadow-xs">
-                正在連線後台檢查剩餘名額 (估算蛋黃酥顆數中)...
+                正在連線後台檢查名額中...
             </div>
         </div>
 
@@ -75,7 +74,7 @@
                                 <option value="2026-08-06">2026 / 08 / 06 (四)</option>
                                 <option value="2026-08-07">2026 / 08 / 07 (五)</option>
                             </optgroup>
-                            <optgroup label="【第二梯次】">
+                            <optgroup label="label">
                                 <option value="2026-08-10">2026 / 08 / 10 (一)</option>
                                 <option value="2026-08-11">2026 / 08 / 11 (二)</option>
                                 <option value="2026-08-12">2026 / 08 / 12 (三)</option>
@@ -183,7 +182,7 @@
             </form>
         </div>
 
-        <!-- 狀態一之一：當日已滿警告（非全檔完售） -->
+        <!-- 狀態一之一：當日已滿警告 -->
         <div id="dateFullNotice" class="hidden bg-orange-50 border border-orange-200 shadow-sm rounded-xl p-4 text-center text-orange-800 text-sm font-medium">
             ⚠️ 溫馨提醒：您選擇的日期目前名額已滿，請切換其他出貨日填單。
         </div>
@@ -236,10 +235,8 @@
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvGiw2lT-Ms-95Ffh8eeCt8ytE3svM-mIO-vZPvFUt8A5vMqT1zLCX4HbvjETFLFbcDw/exec"; 
 
-        // 全域變數用來快取後台傳回的每日庫存資料
         let globalDailyCounts = {};
-        let globalMaxLimitPieces = 4260;
-        let globalTotalAllDays = 0;
+        let globalMaxLimitPieces = 4260; 
 
         window.addEventListener('DOMContentLoaded', () => {
             if (GOOGLE_SCRIPT_URL !== "") {
@@ -247,23 +244,16 @@
                 .then(res => res.json())
                 .then(data => {
                     globalDailyCounts = data.dailyCounts || {};
-                    globalMaxLimitPieces = data.maxLimitPieces || 4260;
+                    globalMaxLimitPieces = data.maxLimitPieces || 4260; // 統一修正預設為您的硬上限 4260
 
-                    // 計算所有日期的加總總量
-                    globalTotalAllDays = 0;
-                    for (let date in globalDailyCounts) {
-                        globalTotalAllDays += globalDailyCounts[date];
-                    }
-                    
-                    // 檢查是否「全檔期」完售（若全爆才關表單）
                     if (data.isFull) {
                         document.getElementById('formBlock').classList.add('hidden');
                         document.getElementById('soldOutBlock').classList.remove('hidden');
                         document.getElementById('stockNotice').innerHTML = `❌ 本期預購名額已滿`;
                         document.getElementById('stockNotice').className = "mt-4 inline-block bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-xs font-semibold shadow-xs";
                     } else {
-                        // 初始預設：顯示全檔期總計
-                        showTotalStatus();
+                        // 初始狀態引導文字
+                        showDefaultNotice();
                     }
                 })
                 .catch(err => {
@@ -273,16 +263,22 @@
             }
         });
 
-        // 💡 新增：切換日期時，即時更新網頁進度條顯示
+        // 💡 修正：未選擇日期時引導文字
+        function showDefaultNotice() {
+            const noticeEl = document.getElementById('stockNotice');
+            noticeEl.innerHTML = `💡 請先在下方選擇指定出貨日期，以查詢當日剩餘名額`;
+            noticeEl.className = "mt-4 inline-block bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full text-xs font-semibold shadow-xs";
+        }
+
+        // 💡 修正：只秀出當日庫存
         function updateDailyStockDisplay() {
             const selectedDate = document.getElementById('shipDate').value;
             const noticeEl = document.getElementById('stockNotice');
             const dateFullEl = document.getElementById('dateFullNotice');
             const submitBtn = document.getElementById('submitBtn');
 
-            // 如果沒有選取任何日期，切回顯示總體狀態
             if (!selectedDate) {
-                showTotalStatus();
+                showDefaultNotice();
                 dateFullEl.classList.add('hidden');
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
@@ -290,37 +286,25 @@
                 return;
             }
 
-            // 取得該日期目前的顆數（若無紀錄則預設為 0）
             const dailyCount = globalDailyCounts[selectedDate] || 0;
             
             if (dailyCount >= globalMaxLimitPieces) {
-                // 該特定日期爆單了
                 noticeEl.innerHTML = `❌ ${selectedDate} 當日預購已滿額`;
                 noticeEl.className = "mt-4 inline-block bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-xs font-semibold shadow-xs";
                 
-                // 秀出警告並鎖定送出按鈕
                 dateFullEl.classList.remove('hidden');
                 submitBtn.disabled = true;
                 submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
                 submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
             } else {
-                // 該特定日期還可以訂
                 noticeEl.innerHTML = `📅 ${selectedDate} 庫存：已接單 ${dailyCount.toLocaleString()} 顆 / 當日上限 ${globalMaxLimitPieces.toLocaleString()} 顆`;
                 noticeEl.className = "mt-4 inline-block bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-xs font-semibold shadow-xs";
                 
-                // 解除警告與按鈕鎖定
                 dateFullEl.classList.add('hidden');
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
                 submitBtn.classList.add('bg-amber-600', 'hover:bg-amber-700');
             }
-        }
-
-        // 輔助函式：顯示全檔總計
-        function showTotalStatus() {
-            const noticeEl = document.getElementById('stockNotice');
-            noticeEl.innerHTML = `🔥 目前尚有名額 (全體已接單: ${globalTotalAllDays.toLocaleString()} 顆 / 單日上限: ${globalMaxLimitPieces.toLocaleString()} 顆)`;
-            noticeEl.className = "mt-4 inline-block bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full text-xs font-semibold shadow-xs";
         }
 
         function calculateCart() {
@@ -401,7 +385,6 @@
                 orderTime: new Date().toLocaleString()
             };
 
-            // 本地快取
             let orders = JSON.parse(localStorage.getItem('deliveryOrders')) || [];
             orders.push({...orderData, status: '訂單處理中'});
             localStorage.setItem('deliveryOrders', JSON.stringify(orders));

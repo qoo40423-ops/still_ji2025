@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>紀家烘焙坊 - 宅配預購系統</title>
+    <title>紀家烘焙坊 - 早鳥宅配預購系統</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         *, *::before, *::after { box-sizing: border-box; }
@@ -128,34 +128,34 @@
                     <div class="grid grid-cols-2 gap-3 mb-4">
                         <div class="bg-white p-2 rounded-xl border border-gray-200 text-center space-y-1">
                             <img src="https://qoo40423-ops.github.io/still_ji2025/images/6boxes.jpg" alt="6入禮盒" class="w-full h-auto rounded-lg shadow-xs object-cover aspect-4/3">
-                            <span class="text-xs font-bold text-gray-600 block pt-1">🎁 6入 (300元)</span>
+                            <span class="text-xs font-bold text-gray-600 block pt-1">🎁 6入禮盒 (300元/盒)</span>
                         </div>
                         <div class="bg-white p-2 rounded-xl border border-gray-200 text-center space-y-1">
                             <img src="https://qoo40423-ops.github.io/still_ji2025/images/15boxes.jpg" alt="15入禮盒" class="w-full h-auto rounded-lg shadow-xs object-cover aspect-4/3">
-                            <span class="text-xs font-bold text-amber-700 block pt-1">🧧 15入 (750元)</span>
+                            <span class="text-xs font-bold text-amber-700 block pt-1">🧧 15入禮盒 (750元/盒)</span>
                         </div>
                     </div>
 
                     <!-- ⚠️ 提袋說明精緻提示區 -->
                     <div class="bg-orange-50 border border-orange-200 rounded-xl p-3 text-xs text-orange-800 mb-4 space-y-1">
-                        <p class="font-bold">💡 包裝附贈說明：</p>
-                        <p>• <strong>6入：</strong>出貨皆附上專屬<strong>塑膠袋</strong>。</p>
-                        <p>• <strong>15入：</strong>出貨皆附上專屬<strong>塑膠禮盒袋</strong>。</p>
+                        <p class="font-bold">💡 包裝附贈說明與訂購限制：</p>
+                        <p>• <strong>6入短盒：</strong>出貨皆附上專屬<strong>塑膠袋</strong>。</p>
+                        <p>• <strong>15入禮盒：</strong>出貨皆附上專屬<strong>塑膠禮盒袋</strong>，且因應宅配免運要求，<strong>此方案最少需訂購 5 盒起</strong>。</p>
                     </div>
 
                     <div class="space-y-2.5">
                         <!-- 品項 1 -->
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
-                                <input type="checkbox" name="productCheck" value="6入 * 4盒" data-price="1200" data-pieces="24" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1">(NT$ 1,200)</span></span>
+                                <input type="checkbox" name="productCheck" id="check_1" value="6入 * 4盒" data-price="1350" data-type="fixed" data-pieces="24" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1">(NT$ 1,350)</span></span>
                             </label>
                             <input type="number" id="qty_1" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
                         <!-- 品項 2 -->
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
-                                <input type="checkbox" name="productCheck" value="6入 * 10盒" data-price="3000" data-pieces="60" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <input type="checkbox" name="productCheck" id="check_2" value="6入 * 10盒" data-price="3000" data-type="fixed" data-pieces="60" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
                                 <span>6入 × 10盒 (60顆) <span class="text-amber-700 font-bold ml-1">(NT$ 3,000)</span></span>
                             </label>
                             <input type="number" id="qty_2" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
@@ -163,26 +163,22 @@
                         <!-- 品項 3 -->
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
-                                <input type="checkbox" name="productCheck" value="6入 * 15盒" data-price="4500" data-pieces="90" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <input type="checkbox" name="productCheck" id="check_3" value="6入 * 15盒" data-price="4500" data-type="fixed" data-pieces="90" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
                                 <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1">(NT$ 4,500)</span></span>
                             </label>
                             <input type="number" id="qty_3" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
-                        <!-- 品項 4 -->
-                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
+
+                        <!-- 🌟 品項 4：15入自由選填方案 (最少5盒) -->
+                        <div class="flex items-center justify-between p-3 border-2 border-amber-200 bg-amber-50/30 rounded-xl hover:bg-amber-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
-                                <input type="checkbox" name="productCheck" value="15入 * 5盒" data-price="3750" data-pieces="75" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>15入 × 5盒 (75顆) <span class="text-amber-700 font-bold ml-1">(NT$ 3,750)</span></span>
+                                <input type="checkbox" name="productCheck" id="check_4" value="15入自由選填" data-price="750" data-type="custom" data-pieces="15" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <span class="font-semibold text-gray-800">🧧 15入禮盒 自訂盒數 <span class="text-xs text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded ml-1 font-bold">最少 5 盒起</span></span>
                             </label>
-                            <input type="number" id="qty_4" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
-                        </div>
-                        <!-- 品項 5 -->
-                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
-                            <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
-                                <input type="checkbox" name="productCheck" value="15入 * 10盒" data-price="7500" data-pieces="150" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>15入 × 10盒 (150顆) <span class="text-amber-700 font-bold ml-1">(NT$ 7,500)</span></span>
-                            </label>
-                            <input type="number" id="qty_5" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                            <div class="flex items-center space-x-1">
+                                <input type="number" id="qty_4" min="5" value="5" disabled oninput="calculateCart()" class="w-20 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold text-sm">
+                                <span class="text-xs text-gray-500 font-medium">盒</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,7 +187,7 @@
                 <div class="bg-amber-50/70 border border-amber-100 rounded-xl p-4 flex justify-between items-center my-2">
                     <div class="text-sm text-gray-600 space-y-0.5">
                         <div>已選方案：<span id="summaryCartText" class="font-medium text-gray-800">無產品</span></div>
-                        <div>本次訂購：<span id="summaryTotalPieces" class="font-bold text-amber-800 text-base">0</span> 顆蛋黃酥 (共 <span id="summaryTotalQty">0</span> 組)</div>
+                        <div>本次訂購：<span id="summaryTotalPieces" class="font-bold text-amber-800 text-base">0</span> 顆蛋黃酥 (共 <span id="summaryTotalQty">0</span> 盒/組)</div>
                     </div>
                     <div class="text-right">
                         <span class="text-sm text-gray-500 font-medium">應付總金額</span>
@@ -336,11 +332,20 @@
 
             checkboxes.forEach((cb, idx) => {
                 const qtyInput = document.getElementById(`qty_${idx + 1}`);
+                const isCustom = cb.getAttribute('data-type') === 'custom';
+
                 if (cb.checked) {
                     qtyInput.disabled = false;
                     qtyInput.classList.remove('bg-gray-100');
-                    let qty = parseInt(qtyInput.value) || 1;
-                    if (qty < 1) { qty = 1; qtyInput.value = 1; }
+                    
+                    let qty = parseInt(qtyInput.value);
+                    
+                    // 防呆：如果是 15入自由選填，最少需填 5
+                    if (isCustom) {
+                        if (isNaN(qty) || qty < 5) { qty = 5; qtyInput.value = 5; }
+                    } else {
+                        if (isNaN(qty) || qty < 1) { qty = 1; qtyInput.value = 1; }
+                    }
 
                     const price = parseInt(cb.getAttribute('data-price'));
                     const piecesPerSet = parseInt(cb.getAttribute('data-pieces'));
@@ -348,7 +353,12 @@
                     totalAmount += (price * qty);
                     totalQty += qty;
                     totalPieces += (piecesPerSet * qty);
-                    selectedItems.push(`${cb.value} × ${qty}組`);
+
+                    if (isCustom) {
+                        selectedItems.push(`15入禮盒 × ${qty}盒`);
+                    } else {
+                        selectedItems.push(`${cb.value} × ${qty}組`);
+                    }
                 } else {
                     qtyInput.disabled = true;
                     qtyInput.classList.add('bg-gray-100');
@@ -379,6 +389,20 @@
 
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // 表單送出時做最終驗證
+            const check4 = document.getElementById('check_4');
+            const qty4 = document.getElementById('qty_4');
+            if (check4.checked) {
+                const customVal = parseInt(qty4.value);
+                if (isNaN(customVal) || customVal < 5) {
+                    alert('❌ 15入禮盒自訂方案最少需訂購 5 盒起！');
+                    qty4.value = 5;
+                    calculateCart();
+                    return;
+                }
+            }
+
             const cart = calculateCart();
             if (cart.totalQty === 0) { alert('❌ 請至少勾選一項宅配方案！'); return; }
 
@@ -399,7 +423,7 @@
                 invoiceType: document.getElementById('invoiceType').value,
                 taxId: document.getElementById('taxId').value || "---",
                 companyTitle: document.getElementById('companyTitle').value || "---",
-                productSpec: cart.productSpec || cart.specText,
+                productSpec: cart.specText,
                 orderQty: cart.totalQty,
                 totalPrice: cart.totalAmount,
                 orderTime: new Date().toLocaleString()

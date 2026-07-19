@@ -74,7 +74,7 @@
                                 <option value="2026-08-06">2026 / 08 / 06 (四)</option>
                                 <option value="2026-08-07">2026 / 08 / 07 (五)</option>
                             </optgroup>
-                            <optgroup label="label">
+                            <optgroup label="【第二梯次】">
                                 <option value="2026-08-10">2026 / 08 / 10 (一)</option>
                                 <option value="2026-08-11">2026 / 08 / 11 (二)</option>
                                 <option value="2026-08-12">2026 / 08 / 12 (三)</option>
@@ -244,7 +244,7 @@
                 .then(res => res.json())
                 .then(data => {
                     globalDailyCounts = data.dailyCounts || {};
-                    globalMaxLimitPieces = data.maxLimitPieces || 4260; // 統一修正預設為您的硬上限 4260
+                    globalMaxLimitPieces = data.maxLimitPieces || 4260;
 
                     if (data.isFull) {
                         document.getElementById('formBlock').classList.add('hidden');
@@ -252,7 +252,6 @@
                         document.getElementById('stockNotice').innerHTML = `❌ 本期預購名額已滿`;
                         document.getElementById('stockNotice').className = "mt-4 inline-block bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-xs font-semibold shadow-xs";
                     } else {
-                        // 初始狀態引導文字
                         showDefaultNotice();
                     }
                 })
@@ -263,14 +262,12 @@
             }
         });
 
-        // 💡 修正：未選擇日期時引導文字
         function showDefaultNotice() {
             const noticeEl = document.getElementById('stockNotice');
             noticeEl.innerHTML = `💡 請先在下方選擇指定出貨日期，以查詢當日剩餘名額`;
             noticeEl.className = "mt-4 inline-block bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full text-xs font-semibold shadow-xs";
         }
 
-        // 💡 修正：只秀出當日庫存
         function updateDailyStockDisplay() {
             const selectedDate = document.getElementById('shipDate').value;
             const noticeEl = document.getElementById('stockNotice');
